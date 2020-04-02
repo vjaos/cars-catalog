@@ -1,0 +1,30 @@
+dist: trusty
+language: java
+jdk: oraclejdk11
+
+branches:
+  only:
+    - master
+
+
+addons:
+  apt:
+    packages:
+      - docker-ce
+
+
+env:
+  global:
+    - COMMIT = ${TRAVIS_COMMIT::7}
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+  - docker login -u $DOCKER_USER $DOCKER_PASS
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH
+    ; fi`
+
+
+  - export API_SERVER=vjaos/api-server
+  - docker build -t $API_SERVER:$COMMIT ./api-server
+  - docker tag $API_SERVER:$COMMIT $API_SERVER:$TAG
+  - docker push $API_SERVER
