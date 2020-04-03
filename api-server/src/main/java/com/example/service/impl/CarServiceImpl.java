@@ -1,5 +1,6 @@
 package com.example.service.impl;
 
+import com.example.dto.CarStatisticResponse;
 import com.example.entity.Car;
 import com.example.exception.CarAlreadyExistsException;
 import com.example.exception.CarNotFoundException;
@@ -8,7 +9,6 @@ import com.example.service.CarService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -21,7 +21,6 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
-@Transactional(readOnly = true)
 public class CarServiceImpl implements CarService {
 
     private CarRepository carRepository;
@@ -52,14 +51,11 @@ public class CarServiceImpl implements CarService {
 
         existing.ifPresent(
                 car -> {
-                    log.error(String.format(
+                    log.warn(String.format(
                             "IN METHOD createCar: Car with number %s already exists",
-                            car.getCarNumber()
-                            )
-                    );
+                            car.getCarNumber()));
                     throw new CarAlreadyExistsException(car.getCarNumber());
-                }
-        );
+                });
 
         return carRepository.save(carData);
     }
@@ -67,7 +63,7 @@ public class CarServiceImpl implements CarService {
     /**
      * Delete car according to given id
      *
-     * @param id of car to be deletet
+     * @param id of car to be deleted
      * @throws CarNotFoundException if car with give id does not exists
      */
     @Override
@@ -77,10 +73,22 @@ public class CarServiceImpl implements CarService {
                 .ifPresentOrElse(
                         car -> carRepository.delete(car),
                         () -> {
-                            log.error(String.format("IN METHOD deleteCarById: Car with id %d not found", id));
+                            log.warn(String.format("IN METHOD deleteCarById: Car with id %d not found", id));
                             throw new CarNotFoundException(id);
                         }
                 );
+
+    }
+
+    @Override
+    public CarStatisticResponse getCarStatistic() {
+        CarStatisticResponse response = new CarStatisticResponse();
+
+        response.setTotalCount(carRepository.count());
+        response.setFirstCreated(carRepository.findTopByOrderByCreated());
+        response.setLastCreated(carRepository.findTopByOrderByCreatedDesc());
+
+        return response;
     }
 
 }

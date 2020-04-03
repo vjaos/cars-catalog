@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-content>
-            <cars-list/>
+
         </v-content>
     </v-app>
 </template>

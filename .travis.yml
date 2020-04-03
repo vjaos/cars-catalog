@@ -6,12 +6,10 @@ branches:
   only:
     - master
 
-
 addons:
   apt:
     packages:
       - docker-ce
-
 
 env:
   global:
@@ -24,7 +22,7 @@ after_success:
     ; fi`
 
 
-  - export API_SERVER=vjaos/api-server
+  - export API_SERVER=vjaos/car-catalog-api-server
   - docker build -t $API_SERVER:$COMMIT ./api-server
   - docker tag $API_SERVER:$COMMIT $API_SERVER:$TAG
   - docker push $API_SERVER

@@ -11,4 +11,6 @@ import java.util.Optional;
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
     Optional<Car> findByCarNumber(@NotNull @NotBlank String carNumber);
+    Car findTopByOrderByCreatedDesc();
+    Car findTopByOrderByCreated();
 }
