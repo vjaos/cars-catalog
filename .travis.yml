@@ -13,11 +13,11 @@ addons:
 
 env:
   global:
-    - COMMIT = ${TRAVIS_COMMIT::7}
+    - COMMIT=${TRAVIS_COMMIT::7}
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - docker login -u $DOCKER_USER $DOCKER_PASS
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH
     ; fi`
 
@@ -30,5 +30,5 @@ after_success:
 
   - export UI=vjaos/car-catalog-ui
   - docker build -t $UI:$COMMIT ./ui
-  - docker tag $UI:$COMMIT $API_SERVER:$TAG
+  - docker tag $UI:$COMMIT $UI:$TAG
   - docker push $UI
