@@ -21,9 +21,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
         logger.setMaxPayloadLength(64000);
         return logger;
     }
-
-    @Bean
-    public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerCustomizer() {
-        return container -> container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/"));
-    }
 }

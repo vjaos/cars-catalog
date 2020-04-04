@@ -19,7 +19,7 @@ public class CorsFilter implements Filter {
     public static final String ALLOWED_ORIGINS = "*";
     public static final String ALLOWED_METHODS = "POST, GET, PUT, OPTIONS, DELETE";
     public static final String MAX_AGE = "3600";
-    public static final String ALLOWED_HEADERS = "x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN";
+    public static final String ALLOWED_HEADERS = "x-requested-with, access-control-allow-origin, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN";
 
     @Override
     public void init(FilterConfig filterConfig) {

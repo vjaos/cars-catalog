@@ -26,3 +26,9 @@ after_success:
   - docker build -t $API_SERVER:$COMMIT ./api-server
   - docker tag $API_SERVER:$COMMIT $API_SERVER:$TAG
   - docker push $API_SERVER
+
+
+  - export UI=vjaos/car-catalog-ui
+  - docker build -t $UI:$COMMIT ./ui
+  - docker tag $UI:$COMMIT $API_SERVER:$TAG
+  - docker push $UI
