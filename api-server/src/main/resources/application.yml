@@ -17,7 +17,7 @@ spring:
     drop-first: true
 
 server:
-  port: 8088
+  port: 8080
 
 logging:
   level:
