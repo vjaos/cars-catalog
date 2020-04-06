@@ -13,4 +13,5 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     Optional<Car> findByCarNumber(@NotNull @NotBlank String carNumber);
     Car findTopByOrderByCreatedDesc();
     Car findTopByOrderByCreated();
+    Integer countAllByColor(@NotNull @NotBlank(message = "Color cannot be empty") String color);
 }

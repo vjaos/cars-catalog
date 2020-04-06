@@ -8,9 +8,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * @author Vyacheslav Osipov
- */
+
 @Data
 @MappedSuperclass
 public class BaseEntity {

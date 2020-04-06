@@ -8,6 +8,11 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
+/**
+ * Dto class that needs to send custom response to client
+ *
+ * @author Vyacheslav Osipov
+ */
 @Data
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ApiMessageResponse {

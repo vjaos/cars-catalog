@@ -22,6 +22,13 @@
 
                         <v-card-text>
                             <v-container>
+                                <div v-if="messages.length">
+                                    <p class="error--text" v-for="message in messages"
+                                       :key="message"
+                                    >
+                                        {{ message }}
+                                    </p>
+                                </div>
                                 <v-row>
                                     <v-col cols="12" md="4" sm="6">
                                         <v-text-field outlined label="Number" v-model="newCar.number"></v-text-field>
@@ -78,6 +85,7 @@
         name: "CarsTable",
         data: () => ({
             dialog: false,
+            messages: [],
             headers: [
                 {text: 'Id', value: 'id'},
                 {text: 'Number', value: 'car_number'},
@@ -98,7 +106,6 @@
             colors: [
                 'Red',
                 'Black',
-                'White',
                 'Purple',
                 'Yellow',
                 'Green'
@@ -118,7 +125,23 @@
         methods: {
             add() {
                 this.$store.dispatch('addCar')
-                this.close()
+                    .then(
+                        () => {
+                            this.close()
+                            this.messages = []
+                        },
+                        error => {
+                            this.messages = []
+                            let errorData = error.response.data
+                            if (errorData.errors) {
+                                for (var i = 0; i < errorData.errors.length; i++) {
+                                    this.messages.push(errorData.errors[i].defaultMessage)
+                                }
+                            } else {
+                                this.messages.push(error.response.data.message)
+                            }
+                        }
+                    )
             },
             remove(car) {
                 this.$store.dispatch('removeCar', car)
@@ -148,7 +171,7 @@
                         colorCode = "#43A047";
                         break;
                     default:
-                        colorCode = "#FFFFFF";
+                        colorCode = "#F44336";
                 }
                 return colorCode;
             }
@@ -157,7 +180,7 @@
 </script>
 
 <style scoped>
-    .border{
+    .border {
         border-color: grey;
     }
 </style>

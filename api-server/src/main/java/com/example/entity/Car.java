@@ -10,8 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -24,22 +22,20 @@ import javax.validation.constraints.NotNull;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Car extends BaseEntity {
     @NotNull
-    @NotBlank
+    @NotBlank(message = "Car number cannot be empty")
     @Column(name = "car_number", unique = true)
     private String carNumber;
 
     @NotNull
-    @NotBlank
+    @NotBlank(message = "Brand cannot be empty")
     @Column(name = "brand")
     private String brand;
 
     @NotNull
-    @NotBlank
+    @NotBlank(message = "Color cannot be empty")
     @Column(name = "color")
     private String color;
 
-    @Min(value = 1805, message = "Release year should not be less that 1805")
-    @Max(value = 2020, message = "Release year should not be greater that 2020")
     @Column(name = "release_year")
     private Integer releaseYear;
 

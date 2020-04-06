@@ -5,5 +5,4 @@ public interface CarsCatalogConstants {
     String CARS = "cars";
 
     String CARS_PATH = API_URL + CARS;
-
 }

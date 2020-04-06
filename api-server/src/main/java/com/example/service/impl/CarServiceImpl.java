@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,15 +81,48 @@ public class CarServiceImpl implements CarService {
 
     }
 
+    /**
+     * Fetch statistic from database as follows:
+     * <ul>
+     *     <li>Amount of cars</li>
+     *     <li>Date of first created car</li>
+     *     <li>Date of last created car</li>
+     *     <li>Amount of purple cars</li>
+     *     <li>Amount of red cars</li>
+     * </ul>
+     * <p>
+     * Notes: Actually, I didn't think that is the best way to fetch database statistic,
+     * but I didn't find the way to get statistic that will be easy to implement.
+     *
+     * @return {@link CarStatisticResponse}
+     */
     @Override
     public CarStatisticResponse getCarStatistic() {
-        CarStatisticResponse response = new CarStatisticResponse();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-        response.setTotalCount(carRepository.count());
-        response.setFirstCreated(carRepository.findTopByOrderByCreated());
-        response.setLastCreated(carRepository.findTopByOrderByCreatedDesc());
+        String firstDate = "No data";
+        String lastDate = "No data";
 
-        return response;
+        long totalCount = carRepository.count();
+        Car firstCreatedCar = carRepository.findTopByOrderByCreated();
+        Car lastCreatedCar = carRepository.findTopByOrderByCreatedDesc();
+        Integer amountOfPurple = carRepository.countAllByColor("Purple");
+        Integer amountOfRed = carRepository.countAllByColor("Red");
+
+        if (firstCreatedCar != null) {
+            firstDate = simpleDateFormat.format(firstCreatedCar.getCreated());
+        }
+        if (lastCreatedCar != null) {
+            lastDate = simpleDateFormat.format(lastCreatedCar.getCreated());
+        }
+
+        return new CarStatisticResponse(
+                totalCount,
+                firstDate,
+                lastDate,
+                amountOfPurple,
+                amountOfRed
+        );
     }
 
 }

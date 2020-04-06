@@ -7,6 +7,11 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * DTO class that needs to send list of cars to the client
+ *
+ * @author Vyacheslav Osipov
+ */
 @Data
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class CarsListResponse {

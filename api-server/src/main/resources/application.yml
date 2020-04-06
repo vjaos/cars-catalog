@@ -13,11 +13,10 @@ spring:
     change-log: classpath:db.changelog/db.changlelog-master.xml
     user: ${POSTGRES_USER:user}
     password: ${POSTGRES_PASSWORD:password}
-    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/postgres
-    drop-first: true
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/postgres}
 
 server:
-  port: 8088
+  port: 8080
 
 logging:
   level:

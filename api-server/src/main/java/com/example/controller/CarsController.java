@@ -5,7 +5,6 @@ import com.example.dto.CarStatisticResponse;
 import com.example.dto.CarsListResponse;
 import com.example.entity.Car;
 import com.example.service.CarService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequestMapping(value = CarsCatalogConstants.CARS_PATH)
 public class CarsController {
@@ -55,7 +53,6 @@ public class CarsController {
 
     @GetMapping(value = "/statistics")
     public ResponseEntity<?> getCarsStatistic() {
-
         CarStatisticResponse statistic = carService.getCarStatistic();
         return new ResponseEntity<>(statistic, HttpStatus.OK);
     }
