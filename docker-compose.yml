@@ -6,7 +6,7 @@ services:
     depends_on:
       - db
     environment:
-      POSTGRES_URL: $POSTGRES_URL
+      POSTGRES_HOST: $POSTGRES_HOST
       POSTGRES_USER: $POSTGRES_USER
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     ports:
